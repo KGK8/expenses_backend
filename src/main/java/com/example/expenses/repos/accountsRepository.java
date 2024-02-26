@@ -8,4 +8,6 @@ public interface accountsRepository extends MongoRepository<accountModel, Intege
 
 	public accountModel findByEmail(String email);
 
+	public accountModel findById(String id);
+
 }

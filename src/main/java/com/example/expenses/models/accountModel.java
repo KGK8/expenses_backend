@@ -4,7 +4,10 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.TimeSeries;
 
+import enums.transactionTypeEnum;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 
 @Entity
@@ -17,13 +20,16 @@ public class accountModel {
 	String name;
 	String email;
 	String phoneNumber;
-	long balance;
+	@Enumerated(EnumType.STRING)
+	transactionTypeEnum transactionType = transactionTypeEnum.SAVINGS;
+	long balance = 0;
+	long creditBalance = 0;
 	long createdOn;
 	long updatedOn;
 	String password;
 
 	public accountModel(String id, String name, long balance, long createdOn, long updatedOn, String email,
-			String phoneNumber,String password) {
+			String phoneNumber, String password, transactionTypeEnum transactionType, long creditBalance) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -33,6 +39,8 @@ public class accountModel {
 		this.createdOn = createdOn;
 		this.updatedOn = updatedOn;
 		this.phoneNumber = phoneNumber;
+		this.transactionType = transactionType;
+		this.creditBalance = creditBalance;
 	}
 
 	public String getId() {
@@ -98,5 +106,21 @@ public class accountModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
+	public transactionTypeEnum getTransactionType() {
+		return transactionType;
+	}
+
+	public void setTransactionType(transactionTypeEnum transactionType) {
+		this.transactionType = transactionType;
+	}
+
+	public long getCreditBalance() {
+		return creditBalance;
+	}
+
+	public void setCreditBalance(long creditBalance) {
+		this.creditBalance = creditBalance;
+	}
+
 }

@@ -19,4 +19,9 @@ public class AppConfig {
 	public com.example.expenses.services.accountsServices accountsServices() {
 		return new com.example.expenses.services.accountsServices();
 	}
+	
+	@Bean
+	public com.example.expenses.services.transactionServices transactionServices(){
+		return new com.example.expenses.services.transactionServices();
+	}
 }

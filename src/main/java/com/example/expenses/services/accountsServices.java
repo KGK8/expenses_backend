@@ -24,7 +24,7 @@ public class accountsServices {
 	private JwtUtils jwtUtils;
 
 	public accountModel checkUserExist(String email) {
-		System.out.println("ASD"+email);
+		System.out.println("ASD" + email);
 		try {
 			accountModel user = accountsRepository.findByEmail(email);
 			System.out.println(user);
@@ -35,12 +35,39 @@ public class accountsServices {
 		}
 	}
 
+	public accountModel getAccountById(String id) {
+		try {
+			accountModel account = accountsRepository.findById(id);
+			return account;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
+
+	public accountModel updateSavingsBalance(String id, String field, long balance) {
+		System.out.println(id + "+" + balance);
+		try {
+			accountModel account = getAccountById(id);
+			account.setUpdatedOn(utils.getTime());
+			if (field.contentEquals("CREDIT")) {
+				System.out.println(balance);
+				account.setCreditBalance(balance);
+			} else {
+				account.setBalance(balance);
+			}
+			return accountsRepository.save(account);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
 	public Map<String, String> createAccount(accountModel accountBody) {
 		Map<String, String> responseMap = new HashMap<String, String>();
 		if (checkUserExist(accountBody.getEmail()) == null) {
 			String passwordCheck = utils.checkPasswordStrength(accountBody.getPassword());
 			if (passwordCheck == "OK") {
-				accountBody.setCreatedOn(0);
 				accountBody.setCreatedOn(utils.getTime());
 				accountBody.setUpdatedOn(utils.getTime());
 				String encyPassword = utils.encryptPassword(accountBody.getPassword());

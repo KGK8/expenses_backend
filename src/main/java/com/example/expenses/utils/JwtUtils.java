@@ -21,16 +21,14 @@ public class JwtUtils {
 	}
 
 	public String validateToken(String token) {
-		System.out.println(token);
+		token = token.split(" ")[1];
 		try {
 			DecodedJWT tokens = JWT.decode(token);
-			Map<String, Claim> c = tokens.getClaims();
-			String em = tokens.getClaim("email").toString().replaceAll("\"", "");
-			System.out.println(em);
-			return em;
+			String userId = tokens.getClaim("userId").toString().replaceAll("\"", "");
+			return userId;
 		} catch (Exception e) {
-			// TODO: handle exception
-			return null;
+			System.err.println(e);
+			return "IN_VALID_TOKEN";
 		}
 	}
 }

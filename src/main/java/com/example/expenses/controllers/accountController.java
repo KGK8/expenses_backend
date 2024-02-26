@@ -20,14 +20,9 @@ import com.example.expenses.services.accountsServices;
 import com.example.expenses.utils.JwtUtils;
 import com.example.expenses.utils.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @RestController
 @RequestMapping("/accounts")
 public class accountController {
-
-	private static final Logger logger = LoggerFactory.getLogger(accountController.class);
 
 	@Autowired
 	private utils utils;
@@ -94,12 +89,18 @@ public class accountController {
 		}
 	}
 
-	@GetMapping("/get")
-	public ResponseEntity<?> getAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String Authorization) {
-		logger.info("FIRST LOG");
-		String token = Authorization.split(" ")[1];
-		accountModel acc = accountsServices.checkUserExist(jwtUtils.validateToken(token));
-		System.out.println(acc);
-		return ResponseEntity.ok(acc);
-	}
+//	@GetMapping("/get")
+//	public ResponseEntity<?> getAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String Authorization) {
+//		Map<String, String> resMap = new HashMap<String, String>();
+//		String token = Authorization.split(" ")[1];
+//		String email = jwtUtils.validateToken(token);
+//		if (email == "IN_VALID_TOKEN") {
+//			resMap.put("status", "ERROR");
+//			resMap.put("message", "In Valid Token...!");
+//			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resMap);
+//		}
+//		accountModel acc = accountsServices.checkUserExist(email);
+//		acc.setPassword(null);
+//		return ResponseEntity.ok(acc);
+//	}
 }

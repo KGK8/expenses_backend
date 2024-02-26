@@ -4,14 +4,14 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.regex.Pattern;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.example.expenses.models.accountModel;
-import com.example.expenses.repos.accountsRepository;
 
 public class utils {
 
@@ -23,6 +23,22 @@ public class utils {
 		LocalDate currentDate = LocalDate.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String formattedDate = currentDate.format(format);
+		return formattedDate;
+	}
+
+	public long convertDateToUnix(String date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dateParser = LocalDate.parse(date, formatter);
+		Instant instant = dateParser.atStartOfDay().atZone(ZoneOffset.UTC).toInstant();
+		long unixTimestamp = instant.getEpochSecond();
+		System.out.println();
+		return unixTimestamp;
+	}
+
+	public String UnixTimeStampToDate(long unixDate) {
+		LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(unixDate), ZoneId.systemDefault());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String formattedDate = dateTime.format(formatter);
 		return formattedDate;
 	}
 
